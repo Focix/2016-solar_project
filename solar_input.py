@@ -5,7 +5,7 @@ from solar_objects import Star, Planet
 
 
 def read_space_objects_data_from_file(input_filename):
-    """Cчитывает данные о космических объектах из файла, создаёт сами объекты
+    """Считывает данные о космических объектах из файла, создаёт сами объекты
     и вызывает создание их графических образов
 
     Параметры:
@@ -24,7 +24,7 @@ def read_space_objects_data_from_file(input_filename):
                 parse_star_parameters(line, star)
                 objects.append(star)
             if object_type == "planet":
-                planet = Star()
+                planet = Planet()
                 parse_star_parameters(line, planet)
                 objects.append(planet)
             else:
@@ -56,8 +56,6 @@ def parse_star_parameters(line, star):
     star.Vy = float(line.split(' ')[7])
 
 
-
-
 def parse_planet_parameters(line, planet):
     """Считывает данные о планете из строки.
     Предполагается такая строка:
@@ -82,7 +80,6 @@ def parse_planet_parameters(line, planet):
     planet.Vy = float(line.split(' ')[7])
 
 
-
 def write_space_objects_data_to_file(output_filename, space_objects):
     """Сохраняет данные о космических объектах в файл.
     Строки должны иметь следующий формат:
@@ -96,11 +93,12 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     with open(output_filename, 'w') as out_file:
         for obj in space_objects:
-            print(out_file, type(obj), obj.r, obj.color, obj.m, obj.x, obj.y,
-                  obj.Vx, obj.Vy)
+            out_file.write(
+                '{} {} {} {} {} {} {} {}\n'.format(obj.type.title(),
+                                                   obj.R, obj.color, obj.m,
+                                                   obj.x, obj.y, obj.Vx,
+                                                   obj.Vy))
 
-
-# FIXME: хорошо бы ещё сделать функцию, сохранающую статистику в заданный файл...
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
